@@ -1,12 +1,17 @@
 import order.Order;
 import order.OrderItem;
 import order.OrderStatus;
+import order.Warehouse;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.*;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestOrder {
     Order order ;
@@ -55,5 +60,19 @@ public class TestOrder {
         order.addItem(new OrderItem("Juice",12.0));
         order.proceedToCheckout(userBalance);
         assertEquals(OrderStatus.OPEN,order.getStatus());
+    }
+
+    @Test
+    public void testOrderFillWithMock(){
+        String TALISKER_NAME= "Talisker";
+        Order order = new Order();
+        OrderItem TALISKER = new OrderItem(TALISKER_NAME,1);
+        TALISKER.setQty(50);
+        order.addItem(TALISKER);
+        Warehouse warehouseMock = mock(Warehouse.class);
+        when(warehouseMock.hasInventory(TALISKER_NAME)).thenReturn(true);
+        order.fill(warehouseMock);
+        //verify
+        assertTrue(order.isFilled());
     }
 }

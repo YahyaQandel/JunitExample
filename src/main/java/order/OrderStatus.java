@@ -3,5 +3,6 @@ package order;
 public enum OrderStatus {
     OPEN,
     PENDING_CHECKOUT,
-    PLACED
+    PLACED,
+    IS_FILLED
 }

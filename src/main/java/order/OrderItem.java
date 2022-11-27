@@ -4,7 +4,7 @@ public class OrderItem {
     private int id;
     private double price;
     private String name;
-
+    private int qty;
     public OrderItem(String itemName,double itemPrice){
         this.price = itemPrice;
         this.name = itemName;
@@ -23,6 +23,14 @@ public class OrderItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public String getName() {

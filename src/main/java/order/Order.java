@@ -65,4 +65,23 @@ public class Order {
     public String toString(){
         return this.getItems().toString();
     }
+
+    public void fill(Warehouse warehouse){
+        for (OrderItem oItem : items){
+            if (!warehouse.hasInventory(oItem.getName())) {
+                return;
+            }
+        }
+        this.removeOrderQtyAndItemsFromWarehouse(warehouse);
+        this.status = OrderStatus.IS_FILLED;
+    }
+    public boolean isFilled(){
+        return this.status == OrderStatus.IS_FILLED;
+    }
+
+    public void removeOrderQtyAndItemsFromWarehouse(Warehouse warehouse){
+        for (OrderItem oItem : items){
+            warehouse.remove(oItem.getName());
+        }
+    }
 }
