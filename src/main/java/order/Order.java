@@ -43,13 +43,11 @@ public class Order {
         // not a good design
         if (userBalance < this.totalPrice) {
             LOGGER.info("Insufficient balance");
-            // throw new Exception("Insufficient balance");
-            return false;
+            throw new Exception("Insufficient balance");
         }
         if (this.items.isEmpty()) {
             LOGGER.info("No items selected");
-            // throw new Exception("No items selected");
-            return false;
+            throw new Exception("No items selected");
         }
         this.status = OrderStatus.PLACED;
         return true;
