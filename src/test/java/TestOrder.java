@@ -52,8 +52,19 @@ public class TestOrder {
     public void testOrderProceedToCheckoutFailsWithInsufficientBalanceDoesntChangeOrderStatus() throws Exception {
         order = new Order();
         double userBalance = 3.0;
-        order.addItem(new OrderItem("Juice",12.0));
-        order.proceedToCheckout(userBalance);
-        assertEquals(OrderStatus.OPEN,order.getStatus());
+        order.addItem(new OrderItem("Juice", 12.0));
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            order.proceedToCheckout(userBalance);
+        });
+
+        String expectedMessage = "Insufficient balance";
+        String actualMessage = exception.getMessage();
+
+        // Verify the exception message
+        assertEquals(expectedMessage, actualMessage);
+
+        // Verify the order status remains unchanged
+        assertEquals(OrderStatus.OPEN, order.getStatus());
     }
 }
